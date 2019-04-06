@@ -157,7 +157,7 @@ class SubmitButton extends Component {
   render() {
     return (
       <button className="submitButton" onClick={this.click}>
-        New Quote
+        New Quote, my good man.
       </button>
     );
   }
