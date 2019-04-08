@@ -9,29 +9,67 @@ class App extends Component {
     this.state = {
       loading: false,
       url: "https://ron-swanson-quotes.herokuapp.com/v2/quotes",
-      name: "Ron Swanson"
+      name: "Ron Swanson",
+      timeTrav: []
     };
   }
 
+  // newQuote(url) {
+  //   fetch(url)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       url.toString().match(/swanson/i)
+  //         ? this.setState({
+  //             quote: data,
+  //             name: "Ron Swanson"
+  //           })
+  //         : url.toString().match(/chucknorris/i)
+  //         ? this.setState({
+  //             quote: data.value,
+  //             name: "Chuck Norris"
+  //           })
+  //         : this.setState({
+  //             quote: data.quote,
+  //             name: "Kanye"
+  //           });
+  //     });
+  // }
+
+  //New func
+  //Outputs the quote to the DOM
+  echoData(url, data) {
+    url.toString().match(/swanson/i)
+      ? this.setState({
+          quote: data,
+          name: "Ron Swanson"
+        })
+      : url.toString().match(/chucknorris/i)
+      ? this.setState({
+          quote: data.value,
+          name: "Chuck Norris"
+        })
+      : this.setState({
+          quote: data.quote,
+          name: "Kanye"
+        });
+  }
+  //GETs new quote, places the data + url in the timeTrav state and calls echoData
   newQuote(url) {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        url.toString().match(/swanson/i)
-          ? this.setState({
-              quote: data,
-              name: "Ron Swanson"
-            })
-          : url.toString().match(/chucknorris/i)
-          ? this.setState({
-              quote: data.value,
-              name: "Chuck Norris"
-            })
-          : this.setState({
-              quote: data.quote,
-              name: "Kanye"
-            });
+        this.setState({
+          timeTrav: this.state.timeTrav.concat([{ url: url, data: data }])
+        });
+        this.echoData(url, data);
       });
+  }
+
+  prevQuote() {
+    this.echoData(
+      this.state.timeTrav[this.state.timeTrav.length - 2].url,
+      this.state.timeTrav[this.state.timeTrav.length - 2].data
+    );
   }
 
   newAuthor() {
@@ -88,8 +126,8 @@ class App extends Component {
           parentMethod={() => this.newAuthor()}
           name={this.state.name}
         />
-        {/* <SpeakCheck />
-        <SayQuote /> */}
+        {/* <SpeakCheck />*/}
+        <PrevQuote parentMethod={() => this.prevQuote()} />
       </div>
     );
   }
@@ -103,8 +141,25 @@ function Quotebox({ quote }) {
 
 //button to say quote
 
-function SayQuote() {
-  return <button className="talkBtn">Say Again</button>;
+class PrevQuote extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      info: "none"
+    };
+  }
+
+  click = () => {
+    this.props.parentMethod();
+  };
+
+  render() {
+    return (
+      <button className="talkBtn" onClick={this.click}>
+        Previous Quote
+      </button>
+    );
+  }
 }
 
 //checkbox can activate Speaker component
@@ -132,7 +187,7 @@ class NewAuthor extends Component {
 
   click = () => {
     this.props.parentMethod();
-    this.props.changeQuote();
+    // this.props.changeQuote();
   };
 
   render() {
