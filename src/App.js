@@ -35,7 +35,6 @@ class App extends Component {
   //     });
   // }
 
-  //New func
   //Outputs the quote to the DOM
   echoData(url, data) {
     url.toString().match(/swanson/i)
@@ -53,7 +52,7 @@ class App extends Component {
           name: "Kanye"
         });
   }
-  //GETs new quote, places the data + url in the timeTrav state and calls echoData
+  //GETs new quote, places the url + data in the timeTrav state and calls echoData
   newQuote(url) {
     fetch(url)
       .then(response => response.json())
@@ -63,13 +62,6 @@ class App extends Component {
         });
         this.echoData(url, data);
       });
-  }
-
-  prevQuote() {
-    this.echoData(
-      this.state.timeTrav[this.state.timeTrav.length - 2].url,
-      this.state.timeTrav[this.state.timeTrav.length - 2].data
-    );
   }
 
   newAuthor() {
@@ -114,7 +106,28 @@ class App extends Component {
     this.newQuote(this.state.url);
   }
 
+  //Calls echoData with second last quote url + data in the array
+  prevQuote() {
+    let i = 2;
+    return this.state.timeTrav.length > 1
+      ? this.echoData(
+          this.state.timeTrav[this.state.timeTrav.length - i].url,
+          this.state.timeTrav[this.state.timeTrav.length - i].data
+        )
+      : "";
+  }
+
+  //if quote is the last in the array --> i == 2
+  // if quote is not last --> i =
+
   render() {
+    // Need to find a way to move backwards from current quote
+    //And Jump to final quote and move backwards from there too
+    let x = 1;
+    const history = this.state.timeTrav;
+    const current = history[this.state.timeTrav.length - x];
+    console.log(current);
+    x++;
     return (
       <div className="App">
         <header className="App-header">
@@ -139,7 +152,7 @@ function Quotebox({ quote }) {
   return <div className="quoteBox">"{quote}"</div>;
 }
 
-//button to say quote
+//button to display previous quote
 
 class PrevQuote extends Component {
   constructor(props) {
@@ -164,17 +177,17 @@ class PrevQuote extends Component {
 
 //checkbox can activate Speaker component
 
-function SpeakCheck() {
-  return (
-    <div>
-      <h3>Talk to me, Ron</h3>
-      <div className="checkboxThree">
-        <input type="checkbox" value="1" id="checkboxThreeInput" name="" />
-        <label htmlFor="checkboxThreeInput" />
-      </div>
-    </div>
-  );
-}
+// function SpeakCheck() {
+//   return (
+//     <div>
+//       <h3>Talk to me, Ron</h3>
+//       <div className="checkboxThree">
+//         <input type="checkbox" value="1" id="checkboxThreeInput" name="" />
+//         <label htmlFor="checkboxThreeInput" />
+//       </div>
+//     </div>
+//   );
+// }
 
 //Gets a new Author
 class NewAuthor extends Component {
