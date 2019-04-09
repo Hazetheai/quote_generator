@@ -39,7 +39,7 @@ class App extends Component {
   echoData(url, data) {
     url.toString().match(/swanson/i)
       ? this.setState({
-          quote: data,
+          quote: data[0],
           name: "Ron Swanson"
         })
       : url.toString().match(/chucknorris/i)
@@ -52,7 +52,7 @@ class App extends Component {
           name: "Kanye"
         });
   }
-  //GETs new quote, places the url + data in the timeTrav state and calls echoData
+  //GETs new quote json, places the url + data in the timeTrav state and calls echoData
   newQuote(url) {
     fetch(url)
       .then(response => response.json())
@@ -64,6 +64,7 @@ class App extends Component {
       });
   }
 
+  // calls newQuote with different url, depending on current url
   newAuthor() {
     this.state.url.toString().match(/kanye/i)
       ? this.setState(
@@ -109,31 +110,32 @@ class App extends Component {
   //Calls echoData with second last quote url + data in the array
   prevQuote() {
     let i = 2;
-    return this.state.timeTrav.length > 1
-      ? this.echoData(
-          this.state.timeTrav[this.state.timeTrav.length - i].url,
-          this.state.timeTrav[this.state.timeTrav.length - i].data
-        )
-      : "";
+    if (this.state.timeTrav.length > 1) {
+      this.echoData(
+        this.state.timeTrav[this.state.timeTrav.length - i].url,
+        this.state.timeTrav[this.state.timeTrav.length - i].data
+      );
+      if (i < this.state.timeTrav.length - 1) {
+        i++;
+        console.log(i);
+      }
+    }
   }
 
-  //if quote is the last in the array --> i == 2
+  //if quote is the last in the array --> i === 2
   // if quote is not last --> i =
 
   render() {
     // Need to find a way to move backwards from current quote
     //And Jump to final quote and move backwards from there too
-    let x = 1;
-    const history = this.state.timeTrav;
-    const current = history[this.state.timeTrav.length - x];
-    console.log(current);
-    x++;
+    const { name, quote } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           <div className="author">{this.state.name} says:</div>
           <Quotebox quote={this.state.quote} />
           <SubmitButton parentMethod={() => this.newQuote(this.state.url)} />
+          <TweetButton author={name} quote={quote} />
         </header>
         <NewAuthor
           parentMethod={() => this.newAuthor()}
@@ -171,6 +173,28 @@ class PrevQuote extends Component {
       <button className="talkBtn" onClick={this.click}>
         Previous Quote
       </button>
+    );
+  }
+}
+
+class TweetButton extends Component {
+  render() {
+    return (
+      <a
+        href={`https://twitter.com/intent/tweet?text= ${this.props.quote} - ${
+          this.props.author
+        }`}
+        id="tweet-quote"
+        rel="noopener noreferrer"
+        target="_blank"
+        title="Post this quote on twitter!"
+      >
+        <button className="tweetBtn tweetBlue">
+          <span>
+            <i className="fab fa-twitter" />
+          </span>
+        </button>
+      </a>
     );
   }
 }
@@ -224,7 +248,7 @@ class SubmitButton extends Component {
 
   render() {
     return (
-      <button className="submitButton" onClick={this.click}>
+      <button className="submitBtn" onClick={this.click}>
         New Quote, my good man.
       </button>
     );

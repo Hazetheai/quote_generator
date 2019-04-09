@@ -26,9 +26,10 @@
   }
 }
 
-.submitButton,
+.submitBtn,
 .newAuthor,
-.talkBtn {
+.talkBtn,
+.tweetBtn {
   color: #282c34;
   background-color: whitesmoke;
   font-style: inherit;
@@ -38,6 +39,12 @@
   margin: 4vh;
   padding: 10px;
   outline: none;
+}
+
+.tweetBlue {
+  background-color: #00aced;
+  border: #00aced;
+  color: whitesmoke;
 }
 
 .submitButton:active,
