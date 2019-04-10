@@ -26,10 +26,7 @@
   }
 }
 
-.submitBtn,
-.newAuthor,
-.talkBtn,
-.tweetBtn {
+.btn {
   color: #282c34;
   background-color: whitesmoke;
   font-style: inherit;
@@ -47,9 +44,7 @@
   color: whitesmoke;
 }
 
-.submitButton:active,
-.newAuthor:active,
-.talkBtn:active {
+.btn:active {
   transform: scale(0.9);
 }
 

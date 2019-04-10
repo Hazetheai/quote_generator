@@ -115,10 +115,11 @@ class App extends Component {
         this.state.timeTrav[this.state.timeTrav.length - i].url,
         this.state.timeTrav[this.state.timeTrav.length - i].data
       );
-      if (i < this.state.timeTrav.length - 1) {
-        i++;
-        console.log(i);
-      }
+      this.setState(prevState => {
+        return {
+          timeTrav: prevState.timeTrav.slice(0, prevState.timeTrav.length - 1)
+        };
+      });
     }
   }
 
@@ -142,6 +143,26 @@ class App extends Component {
           name={this.state.name}
         />
         {/* <SpeakCheck />*/}
+        <Ron
+          identity={this.state.name}
+          parentMethod={() =>
+            this.newQuote("https://ron-swanson-quotes.herokuapp.com/v2/quotes")
+          }
+        />
+        <Chuck
+          identity={this.state.name}
+          parentMethod={() =>
+            this.newQuote("https://api.chucknorris.io/jokes/random")
+          }
+        />
+        <Kanye
+          identity={this.state.name}
+          parentMethod={() =>
+            this.newQuote(
+              "https://cors-anywhere.herokuapp.com/https://api.kanye.rest"
+            )
+          }
+        />
         <PrevQuote parentMethod={() => this.prevQuote()} />
       </div>
     );
@@ -170,7 +191,7 @@ class PrevQuote extends Component {
 
   render() {
     return (
-      <button className="talkBtn" onClick={this.click}>
+      <button className="talkBtn btn" onClick={this.click}>
         Previous Quote
       </button>
     );
@@ -189,7 +210,7 @@ class TweetButton extends Component {
         target="_blank"
         title="Post this quote on twitter!"
       >
-        <button className="tweetBtn tweetBlue">
+        <button className="tweetBtn btn tweetBlue">
           <span>
             <i className="fab fa-twitter" />
           </span>
@@ -232,10 +253,49 @@ class NewAuthor extends Component {
       <div>
         {/* Need to add function to remove second name */}
         <h3>You're boring me {this.props.name.slice(0, 5)}</h3> {}
-        <button className="newAuthor" onClick={this.click}>
+        <button className="newAuthor btn" onClick={this.click}>
           New Author
         </button>
       </div>
+    );
+  }
+}
+
+class Ron extends Component {
+  click = () => {
+    this.props.parentMethod();
+  };
+  render() {
+    return this.props.identity.toString().match(/swanson/i) ? null : (
+      <button className="btn" onClick={this.click}>
+        Ron Swanson
+      </button>
+    );
+  }
+}
+
+class Chuck extends Component {
+  click = () => {
+    this.props.parentMethod();
+  };
+  render() {
+    return this.props.identity.toString().match(/chuck/i) ? null : (
+      <button className="btn" onClick={this.click}>
+        Chuck Norris
+      </button>
+    );
+  }
+}
+
+class Kanye extends Component {
+  click = () => {
+    this.props.parentMethod();
+  };
+  render() {
+    return this.props.identity.toString().match(/kanye/i) ? null : (
+      <button className="btn" onClick={this.click}>
+        Kanye West
+      </button>
     );
   }
 }
@@ -248,7 +308,7 @@ class SubmitButton extends Component {
 
   render() {
     return (
-      <button className="submitBtn" onClick={this.click}>
+      <button className="submitBtn btn" onClick={this.click}>
         New Quote, my good man.
       </button>
     );
