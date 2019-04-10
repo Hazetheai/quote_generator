@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 // import TalkBox from "./speechSynthesis";
 import "./App.css";
+import ron from "./Ron.jpg";
+import chuck from "./Chuck.png";
+import kanye from "./Kanye.jpg";
 // import "./speechSynthesis.css";
 
 class App extends Component {
@@ -107,7 +110,8 @@ class App extends Component {
     this.newQuote(this.state.url);
   }
 
-  //Calls echoData with second last quote url + data in the array
+  // Calls echoData with second last quote url + data in the array
+  // then makes a copy of original array without last element and reads from that.
   prevQuote() {
     let i = 2;
     if (this.state.timeTrav.length > 1) {
@@ -123,45 +127,44 @@ class App extends Component {
     }
   }
 
-  //if quote is the last in the array --> i === 2
-  // if quote is not last --> i =
-
   render() {
-    // Need to find a way to move backwards from current quote
-    //And Jump to final quote and move backwards from there too
     const { name, quote } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           <div className="author">{this.state.name} says:</div>
           <Quotebox quote={this.state.quote} />
-          <SubmitButton parentMethod={() => this.newQuote(this.state.url)} />
+          <Ron
+            identity={this.state.name}
+            parentMethod={() =>
+              this.newQuote(
+                "https://ron-swanson-quotes.herokuapp.com/v2/quotes"
+              )
+            }
+          />
+          <Chuck
+            identity={this.state.name}
+            parentMethod={() =>
+              this.newQuote("https://api.chucknorris.io/jokes/random")
+            }
+          />
+          <Kanye
+            identity={this.state.name}
+            parentMethod={() =>
+              this.newQuote(
+                "https://cors-anywhere.herokuapp.com/https://api.kanye.rest"
+              )
+            }
+          />
+          {/* <SubmitButton parentMethod={() => this.newQuote(this.state.url)} /> */}
           <TweetButton author={name} quote={quote} />
         </header>
+
+        {/* <SpeakCheck />*/}
+
         <NewAuthor
           parentMethod={() => this.newAuthor()}
           name={this.state.name}
-        />
-        {/* <SpeakCheck />*/}
-        <Ron
-          identity={this.state.name}
-          parentMethod={() =>
-            this.newQuote("https://ron-swanson-quotes.herokuapp.com/v2/quotes")
-          }
-        />
-        <Chuck
-          identity={this.state.name}
-          parentMethod={() =>
-            this.newQuote("https://api.chucknorris.io/jokes/random")
-          }
-        />
-        <Kanye
-          identity={this.state.name}
-          parentMethod={() =>
-            this.newQuote(
-              "https://cors-anywhere.herokuapp.com/https://api.kanye.rest"
-            )
-          }
         />
         <PrevQuote parentMethod={() => this.prevQuote()} />
       </div>
@@ -266,11 +269,11 @@ class Ron extends Component {
     this.props.parentMethod();
   };
   render() {
-    return this.props.identity.toString().match(/swanson/i) ? null : (
+    return this.props.identity.toString().match(/swanson/i) ? (
       <button className="btn" onClick={this.click}>
-        Ron Swanson
+        <img src={ron} alt="Ron Swanson" />
       </button>
-    );
+    ) : null;
   }
 }
 
@@ -279,11 +282,11 @@ class Chuck extends Component {
     this.props.parentMethod();
   };
   render() {
-    return this.props.identity.toString().match(/chuck/i) ? null : (
+    return this.props.identity.toString().match(/chuck/i) ? (
       <button className="btn" onClick={this.click}>
-        Chuck Norris
+        <img src={chuck} alt="Chuck Norris" />
       </button>
-    );
+    ) : null;
   }
 }
 
@@ -292,11 +295,11 @@ class Kanye extends Component {
     this.props.parentMethod();
   };
   render() {
-    return this.props.identity.toString().match(/kanye/i) ? null : (
+    return this.props.identity.toString().match(/kanye/i) ? (
       <button className="btn" onClick={this.click}>
-        Kanye West
+        <img src={kanye} alt="Kanye West" />
       </button>
-    );
+    ) : null;
   }
 }
 
