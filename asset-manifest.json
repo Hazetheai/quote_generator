@@ -1,13 +1,15 @@
 {
-  "main.css": "/quote_generator/static/css/main.69b11442.chunk.css",
-  "main.js": "/quote_generator/static/js/main.a31d2fe8.chunk.js",
-  "main.js.map": "/quote_generator/static/js/main.a31d2fe8.chunk.js.map",
+  "main.css": "/quote_generator/static/css/main.71c74796.chunk.css",
+  "main.js": "/quote_generator/static/js/main.e83249ab.chunk.js",
+  "main.js.map": "/quote_generator/static/js/main.e83249ab.chunk.js.map",
   "runtime~main.js": "/quote_generator/static/js/runtime~main.45866308.js",
   "runtime~main.js.map": "/quote_generator/static/js/runtime~main.45866308.js.map",
-  "static/js/2.d6a534e5.chunk.js": "/quote_generator/static/js/2.d6a534e5.chunk.js",
-  "static/js/2.d6a534e5.chunk.js.map": "/quote_generator/static/js/2.d6a534e5.chunk.js.map",
+  "static/js/2.bbcd3f81.chunk.js": "/quote_generator/static/js/2.bbcd3f81.chunk.js",
+  "static/js/2.bbcd3f81.chunk.js.map": "/quote_generator/static/js/2.bbcd3f81.chunk.js.map",
   "index.html": "/quote_generator/index.html",
-  "precache-manifest.d42ce67a0db22471f4595b4edbc52984.js": "/quote_generator/precache-manifest.d42ce67a0db22471f4595b4edbc52984.js",
+  "precache-manifest.9f564126ad4d336c80bce7f579a6cf7f.js": "/quote_generator/precache-manifest.9f564126ad4d336c80bce7f579a6cf7f.js",
   "service-worker.js": "/quote_generator/service-worker.js",
-  "static/css/main.69b11442.chunk.css.map": "/quote_generator/static/css/main.69b11442.chunk.css.map"
+  "static/css/main.71c74796.chunk.css.map": "/quote_generator/static/css/main.71c74796.chunk.css.map",
+  "static/media/Chuck.png": "/quote_generator/static/media/Chuck.15d22072.png",
+  "static/media/Ron.jpg": "/quote_generator/static/media/Ron.8eb22362.jpg"
 }
